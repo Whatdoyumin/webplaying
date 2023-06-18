@@ -47,12 +47,12 @@ const data = [
         <div class="item" class="${i}" onclick="location.href='/calendar/day'">
           ${i}
           <p>
-            ${calendarList[date]?.join('</p><p>') || ''}
+            - ${calendarList[date]?.join('</p><p>') || ''}
           </p>
         </div>
       `;
     }
-  
+
     // 다음달 날짜 표시하기
     for (let i = limitDay; i < nextDay; i++) {
       htmlDummy += `<div class="noColor"></div>`;

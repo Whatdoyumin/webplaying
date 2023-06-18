@@ -1,9 +1,20 @@
-
 const makeCalendar = (date) => {
     const currentMonth = new Date(date).getMonth() + 1;
     const currentDay = new Date(date).getDate();
 
-    document.querySelector(`.mon-day`).innerText = `${currentMonth}/${currentDay}`;
+    const selectedDate = document.location.search;
+    console.log(selectedDate);
+    const selectedMonth = selectedDate.substr(30, 1);
+    console.log(selectedMonth);
+
+    var dayIndex = selectedDate.indexOf('%', 30);
+    console.log(dayIndex);
+
+    const selectedDay = selectedDate.substring(32, dayIndex);
+    console.log(selectedDay);
+
+    
+    document.querySelector(`.mon-day`).innerText = `${selectedMonth}/${selectedDay}`;
 }
 
 const date = new Date();
@@ -38,24 +49,18 @@ const renderCalendar = () => {
     const thisDates = [...Array(TLDate + 1).keys()].slice(1);
     const nextDates = []; // 다음달 날짜
 
-    // Array(n) => 길이가 n인 배열 생성
-    // keys() => 0부터 n -1 까지의 배열 반복자 생성(내부요소 순회) ==> 이번달 마지막 날짜 + 1을 n에 전달
-    // slice(1) => 제일 앞에 있는 0을 없애기 위해
-
+   
     if (PLDay !== 6) { // 이전 달을 표현할 날짜 생성 (지난달 마지막 요일이 토요일(6) 이면 굳이 그릴 그릴 필요 없음)
         for (let i = 0; i < PLDay + 1; i++) {
             prevDates.unshift(PLDate - i);
         }
     }
 
-    //unshift() => 배열의 앞에 아이템을 추가한다. 새로운 요소를 배열의 맨 앞쪽에 추가하고 새로운 길이 반환
-    // 0부터 시작해서 지난달 마지막 요일이 될 때까지 반복하게 작성, 지난달의 마지막 날짜부터 1씩 줄어든 값을 배열 앞쪽으로 채워넣음
-
+    
     for (let i = 1; i < 7 - TLDay; i++) {
         nextDates.push(i); // 이번달 마지막 날짜의 요일을 기준으로 필요한 개수를 파악해서 1부터 1씩 증가시키며 하나씩 채워넣음
     }
 
-    // push() => 배열의 끝에 하나 이상의 요소를 추가하고 배열의 새로운 길이 반환
     const dates = prevDates.concat(thisDates, nextDates); // concat 메서드를 통해서 세 배열을 합침
     const firstDateIndex = dates.indexOf(1); // 지난달 부분을 알아내기 위함
     const lastDateIndex = dates.lastIndexOf(TLDate); // 다음달 부분을 알아내기 위함
@@ -88,4 +93,3 @@ const goToday = () => {
     renderCalendar();
 }
 //삭제
-
